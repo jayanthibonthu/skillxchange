@@ -77,7 +77,7 @@ function Profile() {
       // =========================
       if (storedUser.id) {
         const response = await axios.put(
-          `http://localhost:5000/api/auth/profile/${storedUser.id}`,
+          `${import.meta.env.VITE_API_URL}/api/auth/profile/${storedUser.id}`,
           {
             name,
             email,

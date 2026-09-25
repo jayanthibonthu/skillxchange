@@ -62,7 +62,7 @@ function RequestForm() {
 
       // Send request to backend
       const response = await axios.post(
-        "http://localhost:5000/api/requests/send",
+        `${import.meta.env.VITE_API_URL}/api/requests/send`,
         {
           sender: user.id,
           receiver: receiver,

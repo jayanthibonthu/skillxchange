@@ -38,13 +38,14 @@ function Chat() {
     }
 
     fetchMessages();
-      // Check for new messages every 3 seconds
-  const interval = setInterval(() => {
-    fetchMessages();
-  }, 3000);
 
-  // Stop checking when leaving the chat
-  return () => clearInterval(interval);
+    // Check for new messages every 3 seconds
+    const interval = setInterval(() => {
+      fetchMessages();
+    }, 3000);
+
+    // Stop checking when leaving the chat
+    return () => clearInterval(interval);
   }, []);
 
   // =========================
@@ -53,7 +54,7 @@ function Chat() {
   const fetchMessages = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/messages/${request.id}`
+        `${import.meta.env.VITE_API_URL}/api/messages/${request.id}`
       );
 
       setMessages(response.data.messages || []);
@@ -85,7 +86,7 @@ function Chat() {
           : request.sender;
 
       const response = await axios.post(
-        "http://localhost:5000/api/messages/send",
+        `${import.meta.env.VITE_API_URL}/api/messages/send`,
         {
           requestId: request.id,
           sender: user.id,
@@ -100,7 +101,6 @@ function Chat() {
       ]);
 
       setNewMessage("");
-
     } catch (error) {
       console.error(
         "Send Message Error:",
@@ -109,9 +109,8 @@ function Chat() {
 
       alert(
         error.response?.data?.message ||
-        "Failed to send message"
+          "Failed to send message"
       );
-
     } finally {
       setSending(false);
     }
@@ -138,11 +137,9 @@ function Chat() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white p-6 md:p-10">
-
       <div className="max-w-4xl mx-auto">
 
         {/* BACK BUTTON */}
-
         <button
           onClick={goBack}
           className="flex items-center gap-2 text-slate-400 hover:text-white mb-6"
@@ -151,15 +148,11 @@ function Chat() {
           Back to Dashboard
         </button>
 
-
         {/* CHAT BOX */}
-
         <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
 
           {/* HEADER */}
-
           <div className="bg-slate-800 p-5 border-b border-slate-700">
-
             <h1 className="text-2xl font-bold">
               Chat
             </h1>
@@ -180,12 +173,9 @@ function Chat() {
                 {otherPerson}
               </span>
             </p>
-
           </div>
 
-
           {/* MESSAGES */}
-
           <div className="h-[500px] overflow-y-auto p-6 space-y-4">
 
             {loading && (
@@ -194,10 +184,8 @@ function Chat() {
               </p>
             )}
 
-
             {!loading && messages.length === 0 && (
               <div className="text-center text-slate-500 mt-20">
-
                 <p className="text-lg">
                   No messages yet.
                 </p>
@@ -205,13 +193,10 @@ function Chat() {
                 <p className="text-sm mt-2">
                   Start the conversation!
                 </p>
-
               </div>
             )}
 
-
             {messages.map((msg) => {
-
               const isMine =
                 String(msg.sender) === String(user?.id);
 
@@ -224,7 +209,6 @@ function Chat() {
                       : "justify-start"
                   }`}
                 >
-
                   <div
                     className={`max-w-[75%] px-4 py-3 rounded-2xl ${
                       isMine
@@ -232,13 +216,11 @@ function Chat() {
                         : "bg-slate-800 text-slate-200 rounded-bl-sm"
                     }`}
                   >
-
                     <p>
                       {msg.message}
                     </p>
 
                     <p className="text-xs opacity-60 mt-1">
-
                       {msg.created_at
                         ? new Date(
                             msg.created_at
@@ -247,25 +229,18 @@ function Chat() {
                             minute: "2-digit",
                           })
                         : ""}
-
                     </p>
-
                   </div>
-
                 </div>
               );
             })}
-
           </div>
 
-
           {/* MESSAGE INPUT */}
-
           <form
             onSubmit={sendMessage}
             className="p-4 border-t border-slate-700 flex gap-3"
           >
-
             <input
               type="text"
               value={newMessage}
@@ -281,21 +256,16 @@ function Chat() {
               disabled={sending}
               className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-5 rounded-xl flex items-center gap-2"
             >
-
               <FaPaperPlane />
 
               {sending
                 ? "Sending..."
                 : "Send"}
-
             </button>
-
           </form>
 
         </div>
-
       </div>
-
     </div>
   );
 }

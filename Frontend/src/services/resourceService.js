@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/resources";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/resources`;
 
 export const addResource = async (resourceData) => {
     const response = await axios.post(

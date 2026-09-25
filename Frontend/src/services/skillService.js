@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/skills";
+const API_URL =  `${import.meta.env.VITE_API_URL}/api/skills`;
 
 export const addSkill = async (skillData) => {
     const response = await axios.post(API_URL, skillData);

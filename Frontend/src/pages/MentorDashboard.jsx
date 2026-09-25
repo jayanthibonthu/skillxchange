@@ -287,7 +287,7 @@ function MentorDashboard() {
         try {
 
           const response = await axios.get(
-            `http://localhost:5000/api/messages/${request.id}`
+            `${import.meta.env.VITE_API_URL}/api/messages/${request.id}`
           );
 
 
@@ -403,8 +403,8 @@ function MentorDashboard() {
 
       // Get latest messages
       const response = await axios.get(
-        `http://localhost:5000/api/messages/${request.id}`
-      );
+        `${import.meta.env.VITE_API_URL}/api/messages/${request.id}`
+        );
 
 
       const messages =
@@ -827,7 +827,7 @@ function MentorDashboard() {
                   <video
                     controls
                     className="w-full rounded-lg mb-2"
-                    src={`http://localhost:5000${video.link}`}
+                    src={`${import.meta.env.VITE_API_URL}${video.link}`}
                   />
 
                   {video.description && (
